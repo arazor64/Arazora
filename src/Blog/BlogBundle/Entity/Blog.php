@@ -3,7 +3,9 @@
 namespace BlogBundle\Entity;
 
 /**
- * Blog
+ * @ORM\Entity
+ * @ORM\Table(name="blog")
+ * @ORM\HasLifecycleCallbacks
  */
 class Blog
 {
