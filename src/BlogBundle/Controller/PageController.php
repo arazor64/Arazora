@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BlogBundle\Entity\Blog\Enquiry;
 use BlogBundle\Form\Blog\EnquiryType;
+use BlogBundle\Entity\Blog\Blog;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,10 +18,20 @@ class PageController extends Controller
 	/**
 	 * @Route("/", name="BlogBundle_homepage")
 	 */
-	public function indexAction() {
-		return $this->render('BlogBundle:Page:index.html.twig');
-	}
-	
+    public function indexAction()
+    {
+    	
+        $em = $this->getDoctrine()
+                   ->getEntityManager();
+
+        $blogs = $em->getRepository('BlogBundle\Entity\Blog\Blog')
+                    ->getLatestBlogs();
+
+        return $this->render('BlogBundle:Page:index.html.twig', array(
+            'blogs' => $blogs
+        ));
+    }	
+    
 	/**
 	 * @Route("/about", name="BlogBundle_about")
 	 */

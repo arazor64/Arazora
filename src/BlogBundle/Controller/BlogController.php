@@ -13,7 +13,7 @@ use BlogBundle\Entity\Blog;
 class BlogController extends Controller
 {
 	/**
-	 *  @Route("/{id}", requirements={"id" = "\d+"}, defaults={"id" = 1})
+	 *  @Route("/{id}", name="BlogBundle_blog_show", requirements={"id" = "\d+"})
 	 */
 	public function showAction($id)
     {
@@ -25,8 +25,13 @@ class BlogController extends Controller
             throw $this->createNotFoundException('Unable to find Blog post.');
         }
 
+
+        $comments = $em->getRepository('BlogBundle\Entity\Blog\Comment')->getCommentsForBlog($blog->getId());
+        
         return $this->render('BlogBundle:Blog:show.html.twig', array(
-            'blog'      => $blog,
+        		'blog'      => $blog,
+        		'comments'  => $comments
         ));
+        
     }
 }
