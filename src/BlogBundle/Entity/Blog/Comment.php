@@ -229,5 +229,4 @@ class Comment
     			'message' => 'You must enter a comment'
     	)));
     }
-    
 }

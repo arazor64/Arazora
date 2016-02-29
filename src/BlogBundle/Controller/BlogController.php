@@ -17,8 +17,9 @@ class BlogController extends Controller
 	 */
 	public function showAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
 
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
         $blog = $em->getRepository('BlogBundle\Entity\Blog\Blog')->find($id);
 
         if (!$blog) {
@@ -26,7 +27,8 @@ class BlogController extends Controller
         }
 
 
-        $comments = $em->getRepository('BlogBundle\Entity\Blog\Comment')->getCommentsForBlog($blog->getId());
+        $comments = $em->getRepository('BlogBundle\Entity\Blog\Comment')
+        ->getCommentsForBlog($blog->getId());
         
         return $this->render('BlogBundle:Blog:show.html.twig', array(
         		'blog'      => $blog,
